@@ -20,6 +20,17 @@ public class Event {
 
     private String comment;
 
+    @Transient
+    private int bandCountForFilter;
+
+    public int getBandCountForFilter() {
+        return bandCountForFilter;
+    }
+
+    public void setBandCountForFilter(int bandCountForFilter) {
+        this.bandCountForFilter = bandCountForFilter;
+    }
+
     public Long getId() {
         return id;
     }

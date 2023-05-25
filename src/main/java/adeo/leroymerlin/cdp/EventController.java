@@ -1,6 +1,9 @@
 package adeo.leroymerlin.cdp;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,22 +19,27 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @GetMapping(value = "/")
     public List<Event> findEvents() {
         return eventService.getEvents();
     }
 
-    @RequestMapping(value = "/search/{query}", method = RequestMethod.GET)
+    @GetMapping(value = "/search/{query}")
     public List<Event> findEvents(@PathVariable String query) {
         return eventService.getFilteredEvents(query);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     public void deleteEvent(@PathVariable Long id) {
         eventService.delete(id);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public void updateEvent(@PathVariable Long id, @RequestBody Event event) {
+    @PutMapping(value = "/{id}")
+    @Transactional
+    public ResponseEntity<Event> updateEvent(@PathVariable Long id, @RequestBody Event event) {
+        return eventService.findById(id)
+            .map(eventSaved -> eventService.updateReview(eventSaved, event))
+            .map(ResponseEntity::ok)
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }
