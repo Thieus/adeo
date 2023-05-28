@@ -1,0 +1,35 @@
+# Python
+venv
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+**/bin
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+*.versionsBackup
+*.log
+*.log*gz
+
+# Maven
+target
+
+catalina_home
+scripts/python/__pycache__
