@@ -1,6 +1,7 @@
 package adeo.leroymerlin.cdp.domain.event;
 
 import adeo.leroymerlin.cdp.domain.band.Band;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.Set;
 
@@ -21,6 +22,7 @@ public class Event {
 
     private String comment;
 
+    @JsonIgnore
     @Transient
     private int bandCountForFilter;
 

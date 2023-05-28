@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EventControllerTest {
@@ -32,7 +33,7 @@ public class EventControllerTest {
 		List<Event> expectedEvents = new ArrayList<>();
 		expectedEvents.add(new Event());
 		expectedEvents.add(new Event());
-		Mockito.when(eventService.getEvents()).thenReturn(expectedEvents);
+		when(eventService.getEvents()).thenReturn(expectedEvents);
 
 		List<Event> actualEvents = eventController.findEvents();
 
@@ -45,7 +46,7 @@ public class EventControllerTest {
 		List<Event> expectedEvents = new ArrayList<>();
 		expectedEvents.add(new Event());
 		expectedEvents.add(new Event());
-		Mockito.when(eventService.getFilteredEvents(query)).thenReturn(expectedEvents);
+		when(eventService.getFilteredEvents(query)).thenReturn(expectedEvents);
 
 		List<Event> actualEvents = eventController.findEvents(query);
 
@@ -66,8 +67,8 @@ public class EventControllerTest {
 		Long eventId = 1L;
 		Event updatedEvent = new Event();
 		updatedEvent.setId(eventId);
-		Mockito.when(eventService.findById(eventId)).thenReturn(Optional.of(new Event()));
-		Mockito.when(eventService.updateReview(any(), any())).thenReturn(updatedEvent);
+		when(eventService.findById(eventId)).thenReturn(Optional.of(new Event()));
+		when(eventService.updateReview(any(), any())).thenReturn(updatedEvent);
 
 		ResponseEntity<Event> response = eventController.updateEvent(eventId, updatedEvent);
 
@@ -80,7 +81,7 @@ public class EventControllerTest {
 		Long eventId = 1L;
 		Event updatedEvent = new Event();
 		updatedEvent.setId(eventId);
-		Mockito.when(eventService.findById(eventId)).thenReturn(Optional.empty());
+		when(eventService.findById(eventId)).thenReturn(Optional.empty());
 
 		ResponseEntity<Event> response = eventController.updateEvent(eventId, updatedEvent);
 
