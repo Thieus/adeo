@@ -69,9 +69,6 @@ public class EventService {
     }
 
 	private int getCountMemberWithNameContainQuery(Set<Member> members, String query) {
-		if(members == null){
-			return 0;
-		}
 		return (int) members.stream()
 			.filter(member -> member.getName().contains(query)).count();
 	}
