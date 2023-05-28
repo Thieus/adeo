@@ -1,6 +1,7 @@
 package adeo.leroymerlin.cdp.domain.band;
 
 import adeo.leroymerlin.cdp.domain.member.Member;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.Set;
 
@@ -16,6 +17,14 @@ public class Band {
     @OneToMany(fetch=FetchType.EAGER)
     private Set<Member> members;
 
+    @JsonIgnore
+    @Transient
+    private int memberCountForFilter;
+
+    public void setMemberCountForFilter(int memberCountForFilter) {
+        this.memberCountForFilter = memberCountForFilter;
+    }
+
     public Set<Member> getMembers() {
         return members;
     }
@@ -25,6 +34,9 @@ public class Band {
     }
 
     public String getName() {
+        if(memberCountForFilter > 0) {
+            return name + " [" + memberCountForFilter + "]";
+        }
         return name;
     }
 

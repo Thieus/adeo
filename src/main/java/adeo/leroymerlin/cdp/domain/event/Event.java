@@ -26,12 +26,12 @@ public class Event {
     @Transient
     private int bandCountForFilter;
 
-    public int getBandCountForFilter() {
-        return bandCountForFilter;
+    public void incrementBandCountForFilter() {
+        this.bandCountForFilter++;
     }
 
-    public void setBandCountForFilter(int bandCountForFilter) {
-        this.bandCountForFilter = bandCountForFilter;
+    public int getBandCountForFilter() {
+        return bandCountForFilter;
     }
 
     public Long getId() {
@@ -43,6 +43,9 @@ public class Event {
     }
 
     public String getTitle() {
+        if(bandCountForFilter > 0) {
+            return title + " [" + bandCountForFilter + "]";
+        }
         return title;
     }
 
