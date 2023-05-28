@@ -2,10 +2,8 @@ package adeo.leroymerlin.cdp.domain.event;
 
 
 import adeo.leroymerlin.cdp.domain.band.Band;
-import adeo.leroymerlin.cdp.domain.event.Event;
-import adeo.leroymerlin.cdp.domain.event.EventRepository;
-import adeo.leroymerlin.cdp.domain.event.EventService;
-import adeo.leroymerlin.cdp.domain.member.Member;
+import adeo.leroymerlin.cdp.domain.band.BandTestUtils;
+import adeo.leroymerlin.cdp.domain.member.MemberTestUtils;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -51,24 +49,15 @@ public class EventServiceTest {
 	}
 
 	@Test
-	public void testUpdateReview(){
-		Event eventSaved = createEvent(
-			1L,
-			"Comment Saved",
-			5,
-			"Title test",
-			"img url");
+	public void testUpdateReview() {
+		Event eventSaved = EventTestUtils.createEvent(1L, "Comment Saved", 5, "Title test", "img url");
 
 		Set<Band> bands = new HashSet<>();
-		Band band1 = createBand("Band1");
+		Band band1 = BandTestUtils.createBand("Band1");
 		bands.add(band1);
 
-		Event eventNotified = createEvent(
-			1L,
-			"Comment Notified",
-			4,
-			"Title Notified",
-			"img url Notified");
+		Event eventNotified = EventTestUtils.createEvent(1L, "Comment Notified", 4, "Title Notified", "img url " +
+			"Notified");
 		eventNotified.setBands(bands);
 
 		Event eventResult = eventService.updateReview(eventSaved, eventNotified);
@@ -86,17 +75,17 @@ public class EventServiceTest {
 	public void getFilteredEvents_ReturnsFilteredEvents() {
 		// Arrange
 		String query = "Queen";
-		Event event1 = createEvent(1L, "", 0, "Event 1", "" );
-		Event event2 = createEvent(2L, "", 0,  "Event 2", "");
-		Event event3 = createEvent(3L, "", 0, "Event 3", "");
-		Band band1 = createBand("Band 1");
-		band1.setMembers(Collections.singleton(createMember("Queen")));
-		Band band2 = createBand("Band 2");
-		band2.setMembers(Collections.singleton(createMember("King")));
-		Band band3 = createBand("Band 3");
+		Event event1 = EventTestUtils.createEvent(1L, "", 0, "Event 1", "");
+		Event event2 = EventTestUtils.createEvent(2L, "", 0, "Event 2", "");
+		Event event3 = EventTestUtils.createEvent(3L, "", 0, "Event 3", "");
+		Band band1 = BandTestUtils.createBand("Band 1");
+		band1.setMembers(Collections.singleton(MemberTestUtils.createMember("Queen")));
+		Band band2 = BandTestUtils.createBand("Band 2");
+		band2.setMembers(Collections.singleton(MemberTestUtils.createMember("King")));
+		Band band3 = BandTestUtils.createBand("Band 3");
 		band3.setMembers(new HashSet<>(Arrays.asList(
-			createMember("Queen"),
-			createMember("Felix")
+			MemberTestUtils.createMember("Queen"),
+			MemberTestUtils.createMember("Felix")
 		)));
 		event1.setBands(new HashSet<>(Arrays.asList(
 			band1,
@@ -126,12 +115,12 @@ public class EventServiceTest {
 		Band band1Result = bandsOfEvent1.stream().filter(band -> band.equals(band1)).findFirst()
 			.orElseThrow(() -> new RuntimeException("Band not found"));
 		Band band2Result = bandsOfEvent1.stream().filter(band -> band.equals(band2)).findFirst()
-				.orElseThrow(() -> new RuntimeException("Band not found"));
+			.orElseThrow(() -> new RuntimeException("Band not found"));
 		assertEquals("Band 1 [1]", band1Result.getName());
 		assertEquals("Band 2", band2Result.getName());
 
 		Event eventResult2 = filteredEvents.stream().filter(event -> event.getId().equals(2L))
-				.findFirst().orElseThrow(() -> new RuntimeException("Event not found"));
+			.findFirst().orElseThrow(() -> new RuntimeException("Event not found"));
 		assertEquals("Event 2 [2]", eventResult2.getTitle());
 
 		Set<Band> bandsOfEvent2 = eventResult2.getBands();
@@ -141,34 +130,5 @@ public class EventServiceTest {
 			.orElseThrow(() -> new RuntimeException("Band not found"));
 		assertEquals("Band 1 [1]", band1Result2.getName());
 		assertEquals("Band 3 [1]", band3Result2.getName());
-	}
-
-	private Band createBand(String name) {
-		Band band = new Band();
-		band.setName(name);
-		return band;
-	}
-
-	private Member createMember(String name) {
-		Member member = new Member();
-		member.setName(name);
-		return member;
-	}
-
-	private Event createEvent(Long id,
-		String comment,
-		Integer nbStars,
-		String title,
-		String imgUrl) {
-
-		Event event = new Event();
-
-		event.setId(id);
-		event.setComment(comment);
-		event.setNbStars(nbStars);
-		event.setTitle(title);
-		event.setImgUrl(imgUrl);
-
-		return event;
 	}
 }
