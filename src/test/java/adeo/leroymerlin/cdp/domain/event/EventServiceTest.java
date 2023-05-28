@@ -1,6 +1,11 @@
-package adeo.leroymerlin.cdp;
+package adeo.leroymerlin.cdp.domain.event;
 
 
+import adeo.leroymerlin.cdp.domain.band.Band;
+import adeo.leroymerlin.cdp.domain.event.Event;
+import adeo.leroymerlin.cdp.domain.event.EventRepository;
+import adeo.leroymerlin.cdp.domain.event.EventService;
+import adeo.leroymerlin.cdp.domain.member.Member;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;

@@ -1,5 +1,8 @@
-package adeo.leroymerlin.cdp;
+package adeo.leroymerlin.cdp.domain.event;
 
+import adeo.leroymerlin.cdp.domain.event.Event;
+import adeo.leroymerlin.cdp.domain.event.EventController;
+import adeo.leroymerlin.cdp.domain.event.EventService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

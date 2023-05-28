@@ -1,5 +1,8 @@
-package adeo.leroymerlin.cdp;
+package adeo.leroymerlin.cdp.domain.event;
 
+import adeo.leroymerlin.cdp.domain.band.Band;
+import adeo.leroymerlin.cdp.domain.event.Event;
+import adeo.leroymerlin.cdp.domain.event.EventRepository;
 import java.util.AbstractMap;
 import java.util.List;
 import java.util.Map;
